@@ -9,28 +9,63 @@ public class SimpleMenu implements Menu {
     @Override
     public boolean add(String parentName, String childName, ActionDelegate actionDelegate) {
    /*  добавьте реализацию*/
-        return  false;
+        boolean result = true;
+
+        if (Objects.equals(Menu.ROOT, parentName)) {
+            rootElements.add(new SimpleMenuItem(childName, actionDelegate));
+        } else {
+            Optional<ItemInfo> parentInfo = findItem(parentName);
+            if (parentInfo.isPresent()) {
+                parentInfo.get().menuItem.getChildren().add(new SimpleMenuItem(childName, actionDelegate));
+            } else {
+                result = false;
+            }
+        }
+        return result;
     }
 
     @Override
     public Optional<MenuItemInfo> select(String itemName) {
-        /*  добавьте реализацию*/
-        return null;
+        MenuItemInfo item = null;
+        Iterator<MenuItemInfo> iter = this.iterator();
+
+        while (iter.hasNext()) {
+            item = iter.next();
+            if (item.getName().equals(itemName)) {
+                break;
+            }
+        }
+
+        return Optional.ofNullable(item);
     }
 
     @Override
     public Iterator<MenuItemInfo> iterator() {
-        /*  добавьте реализацию*/
-        return null;
+        List<MenuItemInfo> menuItemInfos = new ArrayList<>();
+        DFSIterator iter = new DFSIterator();
+        ItemInfo item = null;
+
+        while (iter.hasNext()) {
+            item = iter.next();
+            menuItemInfos.add(new MenuItemInfo(item.menuItem, item.number));
+        }
+        return menuItemInfos.iterator();
     }
 
     private Optional<ItemInfo> findItem(String name) {
-        /*  добавьте реализацию*/
-        return null;
+        DFSIterator iter = new DFSIterator();
+        ItemInfo item = null;
+
+        while (iter.hasNext()) {
+            item = iter.next();
+            if (name.equals(item.menuItem.getName())) {
+                break;
+            }
+        }
+        return Optional.ofNullable(item);
     }
 
     private static class SimpleMenuItem implements MenuItem {
-
         private String name;
         private List<MenuItem> children = new ArrayList<>();
         private ActionDelegate actionDelegate;
