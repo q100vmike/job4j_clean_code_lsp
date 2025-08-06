@@ -32,14 +32,14 @@ public class TodoApp {
     }
 
     public static void main(String[] args) {
-        ActionDelegate DEFAULT_ACTION = () -> System.out.println("Some action");
+        ActionDelegate defaultAction = () -> System.out.println("Some action");
 
         TodoApp todoApp = new TodoApp(new SimpleMenu());
-        todoApp.addRootElement("Сходить в магазин", DEFAULT_ACTION);
-        todoApp.addRootElement("Покормить собаку", DEFAULT_ACTION);
-        todoApp.addChildElement("Сходить в магазин", "Купить продукты", DEFAULT_ACTION);
+        todoApp.addRootElement("Сходить в магазин", defaultAction);
+        todoApp.addRootElement("Покормить собаку", defaultAction);
+        todoApp.addChildElement("Сходить в магазин", "Купить продукты", defaultAction);
         todoApp.addChildElement("Купить продукты", "Купить хлеб", () -> System.out.println("ХЛЕБ КУПИ!"));
-        todoApp.addChildElement("Купить продукты", "Купить молоко", DEFAULT_ACTION);
+        todoApp.addChildElement("Купить продукты", "Купить молоко", defaultAction);
         todoApp.show();
         todoApp.runAction("Купить хлеб");
     }
