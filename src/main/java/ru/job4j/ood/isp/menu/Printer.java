@@ -1,8 +1,16 @@
 package ru.job4j.ood.isp.menu;
 
-public class Printer implements MenuPrinter{
+import java.util.Iterator;
+
+public class Printer implements MenuPrinter {
+
     @Override
     public void print(Menu menu) {
-        /*  добавьте реализацию*/
+        Menu.MenuItemInfo item = null;
+        Iterator<Menu.MenuItemInfo> iter = menu.iterator();
+        while (iter.hasNext()) {
+            item = iter.next();
+            System.out.println(item.getNumber() + item.getName());
+        }
     }
 }

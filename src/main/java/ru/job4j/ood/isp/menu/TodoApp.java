@@ -1,14 +1,7 @@
 package ru.job4j.ood.isp.menu;
 
-/**
- * 6. Создайте простенький класс TodoApp. Этот класс будет представлять собой консольное приложение, которое позволяет:
- * Добавить элемент в корень меню;
- * Добавить элемент к родительскому элементу;
- * Вызвать действие, привязанное к пункту меню (действие можно сделать константой,
- * например, ActionDelete DEFAULT_ACTION = () -> System.out.println("Some action")
- * и указывать при добавлении элемента в меню);
- * Вывести меню в консоль.
- */
+import java.util.Iterator;
+
 public class TodoApp {
 
     private Menu menu;
@@ -22,16 +15,32 @@ public class TodoApp {
     }
 
     public boolean addChildElement(String parentName, String childName, ActionDelegate delegate) {
-
-        return true;
+        return menu.add(parentName, childName, delegate);
     }
 
     public void runAction(String name) {
+        menu.select(name).ifPresent(n -> n.getActionDelegate().delegate());
+    }
 
+    public void show() {
+        Menu.MenuItemInfo item = null;
+        Iterator<Menu.MenuItemInfo> iter = menu.iterator();
+        while (iter.hasNext()) {
+            item = iter.next();
+            System.out.println(item.getNumber() + item.getName());
+        }
     }
 
     public static void main(String[] args) {
-        TodoApp todoApp = new TodoApp(new SimpleMenu());
+        ActionDelegate DEFAULT_ACTION = () -> System.out.println("Some action");
 
+        TodoApp todoApp = new TodoApp(new SimpleMenu());
+        todoApp.addRootElement("Сходить в магазин", DEFAULT_ACTION);
+        todoApp.addRootElement("Покормить собаку", DEFAULT_ACTION);
+        todoApp.addChildElement("Сходить в магазин", "Купить продукты", DEFAULT_ACTION);
+        todoApp.addChildElement("Купить продукты", "Купить хлеб", () -> System.out.println("ХЛЕБ КУПИ!"));
+        todoApp.addChildElement("Купить продукты", "Купить молоко", DEFAULT_ACTION);
+        todoApp.show();
+        todoApp.runAction("Купить хлеб");
     }
 }

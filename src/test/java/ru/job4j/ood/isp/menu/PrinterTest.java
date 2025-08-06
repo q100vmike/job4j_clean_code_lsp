@@ -8,10 +8,10 @@ import java.io.PrintStream;
 import static org.junit.jupiter.api.Assertions.*;
 import static ru.job4j.ood.isp.menu.SimpleMenuTest.STUB_ACTION;
 
-class ConsoleMenuPrinterTest {
+class PrinterTest {
 
     @Test
-    public void whenConsoleMenuPrinterTest() {
+    public void whenPrinterTest() {
 
         PrintStream save_out=System.out;
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -29,7 +29,7 @@ class ConsoleMenuPrinterTest {
         menu.add("Сходить в магазин", "Купить продукты", STUB_ACTION);
         menu.add("Купить продукты", "Купить хлеб", STUB_ACTION);
         menu.add("Купить продукты", "Купить молоко", STUB_ACTION);
-        ConsoleMenuPrinter printer = new ConsoleMenuPrinter();
+        Printer printer = new Printer();
 
         printer.print(menu);
 

@@ -8,7 +8,6 @@ public class SimpleMenu implements Menu {
 
     @Override
     public boolean add(String parentName, String childName, ActionDelegate actionDelegate) {
-   /*  добавьте реализацию*/
         boolean result = true;
 
         if (Objects.equals(Menu.ROOT, parentName)) {
@@ -35,7 +34,6 @@ public class SimpleMenu implements Menu {
                 break;
             }
         }
-
         return Optional.ofNullable(item);
     }
 
