@@ -13,15 +13,15 @@ class PrinterTest {
     @Test
     public void whenPrinterTest() {
 
-        PrintStream save_out=System.out;
+        PrintStream saveOut = System.out;
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         System.setOut(new PrintStream(out));
-        String expected = "1.Сходить в магазин\r\n" +
-                "1.1.Купить продукты\r\n" +
-                "1.1.1.Купить хлеб\r\n" +
-                "1.1.2.Купить молоко\r\n" +
-                "2.Покормить собаку\r" +
-                "\n";
+        String expected = "1.Сходить в магазин\r\n"
+                + "1.1.Купить продукты\r\n"
+                + "1.1.1.Купить хлеб\r\n"
+                + "1.1.2.Купить молоко\r\n"
+                + "2.Покормить собаку\r"
+                + "\n";
 
         Menu menu = new SimpleMenu();
         menu.add(Menu.ROOT, "Сходить в магазин", STUB_ACTION);
